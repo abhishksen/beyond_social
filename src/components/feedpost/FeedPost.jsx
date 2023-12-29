@@ -1,10 +1,15 @@
-import React from 'react'
-
+import { Box, Image } from '@chakra-ui/react'
+import PostHeader from './PostHeader'
+import PostFooter from './PostFooter'
 const FeedPost = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <PostHeader />
+            <Box>
+                <Image src='/img1.jpg' alt='user profile' />
+            </Box>
+            <PostFooter />
+        </>
     )
 }
 

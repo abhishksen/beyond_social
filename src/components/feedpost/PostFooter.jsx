@@ -1,9 +1,8 @@
-import React from 'react'
 
 const PostFooter = () => {
     return (
         <div>
-
+            Post footer
         </div>
     )
 }
