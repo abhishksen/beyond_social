@@ -1,8 +1,8 @@
-import { Box, Flex, Text } from "@chakra-ui/react"
+import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react"
 import { useState } from "react"
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constant";
 
-const PostFooter = () => {
+const PostFooter = ({ username }) => {
     const [liked, setLiked] = useState(false);
     const [likes, setLikes] = useState(1000);
 
@@ -17,7 +17,7 @@ const PostFooter = () => {
     }
 
     return (
-        <>
+        <Box mb={10}>
             <Flex
                 aliiItems={'center'}
                 gap={4}
@@ -51,7 +51,7 @@ const PostFooter = () => {
                 fontWeight={700}
                 fontSize={'sm'}
             >
-                Username_{" "}
+                {username}{" "}
                 <Text
                     fontWeight={400}
                     as={'span'}
@@ -65,7 +65,29 @@ const PostFooter = () => {
             >
                 View all 100 comments
             </Text>
-        </>
+            <Flex
+                aliiItems={'center'}
+                justifyContent={'center'}
+                gap={4}
+                w={'full'}
+            >
+                <InputGroup>
+                    <Input variant={'flushed'} placeholder={'Add a comment...'} fontSize={14} />
+                    <InputRightElement>
+                        <Button
+                            variant={'unstyled'}
+                            fontSize={14}
+                            fontWeight={600}
+                            color={'blue.500'}
+                            _hover={{ color: 'white' }}
+                            bg={'transparent'}
+                            cursor={'pointer'}
+                        >Post</Button>
+                    </InputRightElement>
+                </InputGroup>
+
+            </Flex>
+        </Box>
     )
 }
 

@@ -1,12 +1,12 @@
 import { Avatar, Flex, Text, Box } from '@chakra-ui/react'
-const PostHeader = () => {
+const PostHeader = ({ username, avatar }) => {
     const formattedDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
     return (
         <Flex justifyContent={'space-between'} alignItems={'center'} w={'full'} my={4}>
             <Flex alignItems={'center'} gap={2}>
-                <Avatar size={'sm'} src={'./profilepic.jpg'} alt='user profile pic' />
+                <Avatar size={'sm'} src={avatar} alt='user profile pic' />
                 <Flex gap={2} alignItems={'center'} textAlign={'center'}>
-                    <Text fontWeight={'bold'}>Username</Text>
+                    <Text fontWeight={'bold'}>{username}</Text>
                     <Text fontSize={'sm'} color={'gray.500'} >{formattedDate}</Text>
                 </Flex>
             </Flex>
