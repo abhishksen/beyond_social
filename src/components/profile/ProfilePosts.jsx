@@ -17,7 +17,7 @@ const ProfilePosts = () => {
             gap={1}
             columnGap={1}
         >
-
+            {/* loading skeleton */}
             {isLoading && [0, 1, 2, 3, 4, 5].map((item, index) => (
                 <VStack key={index} alignItems={"flex-start"} gap={4}>
                     <Skeleton w={'full'}>
@@ -28,10 +28,10 @@ const ProfilePosts = () => {
 
             {!isLoading && (
                 <>
-                    <ProfilePost />
-                    <ProfilePost />
-                    <ProfilePost />
-                    <ProfilePost />
+                    <ProfilePost img="/img1.jpg" />
+                    <ProfilePost img="/img2.jpg" />
+                    <ProfilePost img="/img3.jpg" />
+                    <ProfilePost img="/img4.jpg" />
                 </>
             )}
 
