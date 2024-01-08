@@ -2,7 +2,7 @@ import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text } from "@
 import { useState } from "react"
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constant";
 
-const PostFooter = ({ username }) => {
+const PostFooter = ({ username, isProfilePage }) => {
     const [liked, setLiked] = useState(false);
     const [likes, setLikes] = useState(1000);
 
@@ -17,7 +17,7 @@ const PostFooter = ({ username }) => {
     }
 
     return (
-        <Box mb={10}>
+        <Box mb={10} mt={"auto"}>
             <Flex
                 aliiItems={'center'}
                 gap={4}
@@ -47,24 +47,26 @@ const PostFooter = ({ username }) => {
             >
                 {likes} likes
             </Text>
-            <Text
-                fontWeight={700}
-                fontSize={'sm'}
-            >
-                {username}{" "}
+            {!isProfilePage && (<>
                 <Text
-                    fontWeight={400}
-                    as={'span'}
+                    fontWeight={700}
+                    fontSize={'sm'}
                 >
-                    Feeling Good
+                    {username}{" "}
+                    <Text
+                        fontWeight={400}
+                        as={'span'}
+                    >
+                        Feeling Good
+                    </Text>
                 </Text>
-            </Text>
-            <Text
-                fontSize={'sm'}
-                color={'gray.500'}
-            >
-                View all 100 comments
-            </Text>
+                <Text
+                    fontSize={'sm'}
+                    color={'gray.500'}
+                >
+                    View all 100 comments
+                </Text>
+            </>)}
             <Flex
                 aliiItems={'center'}
                 justifyContent={'center'}
@@ -85,7 +87,6 @@ const PostFooter = ({ username }) => {
                         >Post</Button>
                     </InputRightElement>
                 </InputGroup>
-
             </Flex>
         </Box>
     )

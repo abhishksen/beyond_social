@@ -13,12 +13,15 @@ const styles = {
     body: {
       bg: mode('gray.100', 'gray.900')(props),
       color: mode('gray.900', 'whiteAlpha.900')(props),
+      // bg: mode('gray.100', 'gray.900')(props),
+      // color: mode('gray.900', 'gray.700')(props),
     }
   })
 }
 
 const config = {
   initialColorMode: "dark",
+  // initialColorMode: "light",
   useSystemColorMode: false,
 }
 

@@ -1,7 +1,9 @@
-import { Avatar, Box, Divider, Flex, GridItem, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, VStack, useDisclosure } from "@chakra-ui/react"
+import { Avatar, Box, Divider, Flex, GridItem, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, VStack, useDisclosure } from "@chakra-ui/react"
 import { AiFillHeart } from "react-icons/ai"
 import { FaComment } from "react-icons/fa"
 import { MdDelete } from "react-icons/md"
+import Comment from "../comment/Comment"
+import PostFooter from "../feedpost/PostFooter"
 
 const ProfilePost = ({ img }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,20 +63,30 @@ const ProfilePost = ({ img }) => {
                     <ModalCloseButton />
                     <ModalBody
                         bg={"gray.900"}
-                        py={5}
+                        py={6}
                     >
                         <Flex gap={4} w={{ base: "90%", sm: "70%", md: "full" }}
                             mx={"auto"}
                         >
-                            {/* image on the left */}
+                            {/* post image on the left */}
                             <Box
                                 borderRadius={4}
                                 overflow={"hidden"}
-                                border={"1px solid"}
-                                borderColor={"whiteAlpha.300"}
+                                // border={"1px solid"}
+                                // borderColor={"whiteAlpha.300"}
                                 flex={1.5}
-                                maxH={"500px"}
+                                maxH={"570px"}
                                 overflowY={"auto"}
+                                css={{
+                                    // Hide the scrollbar for WebKit browsers (Chrome, Safari)
+                                    "&::-webkit-scrollbar": {
+                                        display: "none",
+                                    },
+                                    // Hide the scrollbar for Microsoft browsers (Internet Explorer and Edge)
+                                    "-ms-overflow-style": "none",
+                                    // Hide the scrollbar for Firefox
+                                    scrollbarWidth: "none",
+                                }}
                             >
                                 <Image src={img} alt="profile post" />
                             </Box>
@@ -85,6 +97,7 @@ const ProfilePost = ({ img }) => {
                                 px={10}
                                 display={{ base: "none", md: "block" }}
                             >
+                                {/* user info */}
                                 <Flex
                                     alignItems={"center"}
                                     justifyContent={"space-between"}
@@ -100,14 +113,56 @@ const ProfilePost = ({ img }) => {
                                         <MdDelete size={20} cursor="pointer" />
                                     </Box>
                                 </Flex>
-                                <Divider my={4} bg={"gray.500"} />
 
+                                <Divider my={5} bg={"gray.700"} />
+
+                                {/* all comments */}
                                 <VStack
                                     w={"full"}
                                     alignItems={"start"}
                                     maxH={"340px"}
                                     overflowY={"auto"}
-                                ></VStack>
+                                    css={{
+                                        // Hide the scrollbar for WebKit browsers (Chrome, Safari)
+                                        "&::-webkit-scrollbar": {
+                                            display: "none",
+                                        },
+                                        // Hide the scrollbar for Microsoft browsers (Internet Explorer and Edge)
+                                        "-ms-overflow-style": "none",
+                                        // Hide the scrollbar for Firefox
+                                        scrollbarWidth: "none",
+                                    }}
+                                >
+                                    <Comment
+                                        createdAt="3h ago"
+                                        username="agedjkfhg"
+                                        profilePic="/img2.jpg"
+                                        text="sala mera comment padh idhar"
+                                    />
+                                    <Comment
+                                        createdAt="1d ago"
+                                        username="abc_xyz"
+                                        profilePic="/img1.jpg"
+                                        text="hee hee bhai me to na sehta"
+                                    />
+                                    <Comment
+                                        createdAt="14h ago"
+                                        username="hari_om"
+                                        profilePic="/img4.jpg"
+                                        text="bhai admin credit to de deta"
+                                    />
+                                    <Comment
+                                        createdAt="1d ago"
+                                        username="abc_xyz"
+                                        profilePic="/img1.jpg"
+                                        text="hee hee bhai me to na sehta"
+                                    />
+                                </VStack>
+
+                                {/* <Divider my={4} bg={"gray.500"} /> */}
+
+                                {/* comment input box */}
+                                <PostFooter isProfilePage={true} />
 
                             </Flex>
                         </Flex>
