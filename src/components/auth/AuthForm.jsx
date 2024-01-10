@@ -2,6 +2,7 @@ import { Box, Flex, Image, Text, VStack } from "@chakra-ui/react"
 import { useState } from "react"
 import Login from "./Login"
 import Signup from "./Signup"
+import GoogleAuth from "./GoogleAuth"
 
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true)
@@ -20,12 +21,8 @@ const AuthForm = () => {
                         <Box w={'full'} h={'1px'} bg={'grey'} />
                     </Flex>
 
-                    <Flex alignItems={'center'} justifyContent={'center'} cursor={'pointer'}>
-                        <Image src="/google.png" alt="Google logo" w={5} />
-                        <Text mx={2} color={'blue.500'}>
-                            Continue with Google
-                        </Text>
-                    </Flex>
+                    <GoogleAuth />
+
                 </VStack>
             </Box>
 
