@@ -1,10 +1,15 @@
 import { doc, setDoc } from "firebase/firestore";
 import { auth, firestore } from "../firebase/firebase"
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth"
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import useShowToast from "./useShowToast";
 
 const useSignupWithEmailAndPassword = () => {
-    const [createUserWithEmailAndPassword, loading, error] = useCreateUserWithEmailAndPassword(auth);
+    const [
+        createUserWithEmailAndPassword, ,
+        loading,
+        error,
+    ] = useCreateUserWithEmailAndPassword(auth);
+
     const showToast = useShowToast();
 
     const signup = async (inputs) => {
@@ -38,9 +43,7 @@ const useSignupWithEmailAndPassword = () => {
             showToast("Error", err.message, "error");
         }
     }
-    return {
-        loading, error, signup
-    }
+    return { loading, error, signup }
 }
 
 export default useSignupWithEmailAndPassword
