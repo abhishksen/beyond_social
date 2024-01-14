@@ -11,7 +11,7 @@ const ProfilePage = () => {
 
     const { isLoading, userProfile } = useGetUserProfileByUsername(username);
 
-    const userNotFound = !userProfile && !isLoading;;
+    const userNotFound = !userProfile && !isLoading;
 
     if (userNotFound) return <UserNotFound />
 

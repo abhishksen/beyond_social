@@ -1,12 +1,23 @@
-import { Avatar, AvatarGroup, Button, Flex, Text, VStack } from "@chakra-ui/react"
+import { Avatar, AvatarGroup, Button, Flex, Text, VStack, useDisclosure } from "@chakra-ui/react"
+import useUserProfileStore from "../../store/userProfileStore";
+import useAuthStore from "../../store/authStore";
+import EditProfile from "./EditProfile";
 
 const ProfileHeader = () => {
+    const { userProfile } = useUserProfileStore();
+
+    const authUser = useAuthStore(state => state.user);
+
+    const visitingOwnProfileAndAuth = authUser && authUser.userName === userProfile.userName;
+    const visitingAnotherProfileAndAuth = authUser && authUser.userName !== userProfile.userName;
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     return (
         <Flex
             gap={{ base: 4, sm: 10 }}
             py={10}
             direction={{ base: 'column', sm: 'row' }}
-        // alignItems={{ base: 'center', sm: 'flex-start' }}
         >
             <AvatarGroup
                 size={{ base: 'xl', md: '2xl' }}
@@ -14,7 +25,7 @@ const ProfileHeader = () => {
                 alignSelf={'flex-start'}
                 mx={'auto'}
             >
-                <Avatar name="Abhishek Sen" src="/profilepic.jpg" alt=" Abhishek Sen" />
+                <Avatar name="Abhishek Sen" src={userProfile.profilePicURL} alt=" Abhishek Sen" />
             </AvatarGroup>
             <VStack
                 alignItems={'start'}
@@ -26,60 +37,75 @@ const ProfileHeader = () => {
                     gap={4}
                     direction={{ base: 'column', sm: 'row' }}
                     justifyContent={{ base: 'center', sm: 'flex-start' }}
-                    // justifyContent={'center'}
                     alignItems={'center'}
                     w={'full'}
                 >
                     <Text fontSize={{ base: 'small', md: 'large' }} >
-                        sen_abhishk
+                        {userProfile.userName}
                     </Text>
-                    <Flex
-                        gap={4}
-                        alignItems={'center'}
-                        justifyContent={'center'}
-                    >
-                        <Button
-                            variant={'outline'}
-                            colorScheme="blue"
-                            color={'blue.500'}
-                            size={{ base: 'xs', md: 'md' }}
-                        >Edit Profile</Button>
-                    </Flex>
+                    {visitingOwnProfileAndAuth && (
+                        <Flex
+                            gap={4}
+                            alignItems={'center'}
+                            justifyContent={'center'}
+                        >
+                            <Button
+                                variant={'outline'}
+                                colorScheme="blue"
+                                color={'blue.500'}
+                                size={{ base: 'xs', md: 'md' }}
+                                onClick={onOpen}
+                            >Edit Profile</Button>
+                        </Flex>)}
+                    {visitingAnotherProfileAndAuth && (
+                        <Flex
+                            gap={4}
+                            alignItems={'center'}
+                            justifyContent={'center'}
+                        >
+                            <Button
+                                variant={'ghost'}
+                                colorScheme="blue"
+                                color={'blue.500'}
+                                size={{ base: 'xs', md: 'md' }}
+                            >Follow</Button>
+                        </Flex>)}
                 </Flex>
                 <Flex
                     gap={{ base: 2, sm: 4 }}
-                    // direction={{ base: 'column', sm: 'row' }}
-                    // justifyContent={{ base: 'center', sm: 'flex-start' }}
                     alignItems={'center'}
                 >
                     <Text>
                         <Text as={'span'} fontWeight={'bold'} mr={1} >
-                            10
+                            {userProfile.posts.length}
                         </Text>
                         Posts
                     </Text>
                     <Text>
                         <Text as={'span'} fontWeight={'bold'} mr={1} >
-                            100
+                            {userProfile.followers.length}
                         </Text>
                         Followers
                     </Text>
                     <Text>
                         <Text as={'span'} fontWeight={'bold'} mr={1} >
-                            1000
+                            {userProfile.following.length}
                         </Text>
                         Following
                     </Text>
                 </Flex>
                 <Flex>
                     <Text fontSize={{ base: 'small', md: 'large' }} fontWeight={'bold'} >
-                        Abhishek Sen
+                        {userProfile.fullName}
                     </Text>
                 </Flex>
                 <Text fontSize={'sm'}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatem.
+                    {userProfile.bio}
                 </Text>
             </VStack>
+
+            {isOpen && <EditProfile isOpen={isOpen} onClose={onClose} />}
+
         </Flex>
     )
 }
