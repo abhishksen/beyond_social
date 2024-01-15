@@ -23,8 +23,6 @@ const PostHeader = ({ username, avatar }) => {
                     color={'white'}
                     _hover={{
                         color: 'blue.500',
-                        // textDecoration: 'underline',
-                        // textDecorationColor: 'blue.500'
                     }}
                     transition={'all .3s ease-in-out'}
                 >Unfollow</Text>

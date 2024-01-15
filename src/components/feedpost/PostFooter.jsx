@@ -19,7 +19,7 @@ const PostFooter = ({ username, isProfilePage }) => {
     return (
         <Box mb={10} mt={"auto"}>
             <Flex
-                aliiItems={'center'}
+                alignItems={'center'}
                 gap={4}
                 w={'full'}
                 pt={2}
@@ -68,7 +68,7 @@ const PostFooter = ({ username, isProfilePage }) => {
                 </Text>
             </>)}
             <Flex
-                aliiItems={'center'}
+                alignItems={'center'}
                 justifyContent={'center'}
                 gap={4}
                 w={'full'}
