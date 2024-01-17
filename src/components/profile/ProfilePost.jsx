@@ -22,7 +22,7 @@ const ProfilePost = ({ img }) => {
                 {/* overlay on hover over the card */}
                 <Flex
                     opacity={0}
-                    _hover={{ opacity: .5 }}
+                    _hover={{ opacity: 0.5 }}
                     position={"absolute"}
                     top={0}
                     left={0}
@@ -70,23 +70,13 @@ const ProfilePost = ({ img }) => {
                         >
                             {/* post image on the left */}
                             <Box
-                                borderRadius={4}
+                                borderRadius={8}
                                 overflow={"hidden"}
                                 // border={"1px solid"}
                                 // borderColor={"whiteAlpha.300"}
                                 flex={1.5}
                                 maxH={"570px"}
                                 overflowY={"auto"}
-                                css={{
-                                    // Hide the scrollbar for WebKit browsers (Chrome, Safari)
-                                    "&::-webkit-scrollbar": {
-                                        display: "none",
-                                    },
-                                    // Hide the scrollbar for Microsoft browsers (Internet Explorer and Edge)
-                                    "-ms-overflow-style": "none",
-                                    // Hide the scrollbar for Firefox
-                                    scrollbarWidth: "none",
-                                }}
                             >
                                 <Image src={img} alt="profile post" />
                             </Box>
@@ -122,16 +112,6 @@ const ProfilePost = ({ img }) => {
                                     alignItems={"start"}
                                     maxH={"340px"}
                                     overflowY={"auto"}
-                                    css={{
-                                        // Hide the scrollbar for WebKit browsers (Chrome, Safari)
-                                        "&::-webkit-scrollbar": {
-                                            display: "none",
-                                        },
-                                        // Hide the scrollbar for Microsoft browsers (Internet Explorer and Edge)
-                                        "-ms-overflow-style": "none",
-                                        // Hide the scrollbar for Firefox
-                                        scrollbarWidth: "none",
-                                    }}
                                 >
                                     <Comment
                                         createdAt="3h ago"
