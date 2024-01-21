@@ -44,33 +44,36 @@ const useFollowUser = (userId) => {
                     ...user,
                     following: user.following.filter(followingId => followingId !== userId)
                 })
-                setUserProfile({
-                    ...userProfile,
-                    followers: userProfile.followers.filter(followerId => followerId !== user.uid)
-                })
-
+                if (userProfile) {
+                    setUserProfile({
+                        ...userProfile,
+                        followers: userProfile.followers.filter(followerId => followerId !== user.uid)
+                    })
+                }
                 localStorage.setItem("user-info", JSON.stringify({
                     ...user,
                     following: user.following.filter(followingId => followingId !== userId)
                 }))
-                showToast("Success", `Unfollowed ${userProfile.fullName}`, "success")
+                showToast("Success", `Unfollowed successfully!`, "success")
                 setIsFollowing(false)
             } else {
                 setUser({
                     ...user,
                     following: [...user.following, userId]
                 })
-                setUserProfile({
-                    ...userProfile,
-                    followers: [...userProfile.followers, user.uid]
-                })
+                if (userProfile) {
+                    setUserProfile({
+                        ...userProfile,
+                        followers: [...userProfile.followers, user.uid]
+                    })
+                }
 
                 localStorage.setItem("user-info", JSON.stringify({
                     ...user,
                     following: [...user.following, userId]
                 }))
 
-                showToast("Success", `Followed ${userProfile.fullName}`, "success")
+                showToast("Success", `Followed successfully!`, "success")
                 setIsFollowing(true)
             }
 

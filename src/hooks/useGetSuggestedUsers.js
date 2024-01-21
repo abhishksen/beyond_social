@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useAuthStore } from "../store/authStore";
-import { useShowToast } from "./useShowToast";
+import useAuthStore from "../store/authStore";
+import useShowToast from "./useShowToast";
 import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore"
 import { firestore } from "../firebase/firebase"
 const useGetSuggestedUsers = () => {
