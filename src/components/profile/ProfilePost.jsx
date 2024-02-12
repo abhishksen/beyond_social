@@ -4,9 +4,11 @@ import { FaComment } from "react-icons/fa"
 import { MdDelete } from "react-icons/md"
 import Comment from "../comment/Comment"
 import PostFooter from "../feedpost/PostFooter"
+import useUserProfileStore from "../../store/userProfileStore"
 
-const ProfilePost = ({ img }) => {
+const ProfilePost = ({ post }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const userProfile = useUserProfileStore((state) => state.userProfile);
     return (
         <>
             <GridItem
@@ -41,15 +43,19 @@ const ProfilePost = ({ img }) => {
                     >
                         <Flex>
                             <AiFillHeart size={20} />
-                            <Text fontWeight={"bold"} ml={2}>25</Text>
+                            <Text fontWeight={"bold"} ml={2}>
+                                {post.likes.length}
+                            </Text>
                         </Flex>
                         <Flex>
                             <FaComment size={20} />
-                            <Text fontWeight={"bold"} ml={2}>5</Text>
+                            <Text fontWeight={"bold"} ml={2}>
+                                {post.comments.length}
+                            </Text>
                         </Flex>
                     </Flex>
                 </Flex>
-                <Image src={img} alt="profile-post" w={"100%"} h={"100%"} objectFit={"cover"} />
+                <Image src={post.imageURL} alt="profile-post" w={"100%"} h={"100%"} objectFit={"cover"} />
             </GridItem>
 
             {/* modal code */}
@@ -65,11 +71,14 @@ const ProfilePost = ({ img }) => {
                         bg={"gray.900"}
                         py={6}
                     >
-                        <Flex gap={4} w={{ base: "90%", sm: "70%", md: "full" }}
+                        <Flex gap={4}
+                            w={{ base: "90%", sm: "70%", md: "full" }}
                             mx={"auto"}
+                            maxH={"90vh"}
+                            minH={"50vh"}
                         >
                             {/* post image on the left */}
-                            <Box
+                            <Flex
                                 borderRadius={8}
                                 overflow={"hidden"}
                                 // border={"1px solid"}
@@ -77,9 +86,11 @@ const ProfilePost = ({ img }) => {
                                 flex={1.5}
                                 maxH={"570px"}
                                 overflowY={"auto"}
+                                justifyContent={"center"}
+                                alignItems={"center"}
                             >
-                                <Image src={img} alt="profile post" />
-                            </Box>
+                                <Image src={post.imageURL} alt="profile post" />
+                            </Flex>
                             {/* other content on the right */}
                             <Flex
                                 flex={1}
@@ -96,8 +107,10 @@ const ProfilePost = ({ img }) => {
                                         alignItems={"center"}
                                         gap={4}
                                     >
-                                        <Avatar src="/profilepic.jpg" size={"sm"} name="username" />
-                                        <Text fontSize={14} fontWeight={"bold"}>sen_abhishk</Text>
+                                        <Avatar src={userProfile.profilePicURL} size={"sm"} name="username" />
+                                        <Text fontSize={14} fontWeight={"bold"}>
+                                            {userProfile.userName}
+                                        </Text>
                                     </Flex>
                                     <Box _hover={{ bg: "whiteAlpha.300", color: "red.600" }} borderRadius={4} p={1}>
                                         <MdDelete size={20} cursor="pointer" />
@@ -118,24 +131,6 @@ const ProfilePost = ({ img }) => {
                                         username="agedjkfhg"
                                         profilePic="/img2.jpg"
                                         text="sala mera comment padh idhar"
-                                    />
-                                    <Comment
-                                        createdAt="1d ago"
-                                        username="abc_xyz"
-                                        profilePic="/img1.jpg"
-                                        text="hee hee bhai me to na sehta"
-                                    />
-                                    <Comment
-                                        createdAt="14h ago"
-                                        username="hari_om"
-                                        profilePic="/img4.jpg"
-                                        text="bhai admin credit to de deta"
-                                    />
-                                    <Comment
-                                        createdAt="1d ago"
-                                        username="abc_xyz"
-                                        profilePic="/img1.jpg"
-                                        text="hee hee bhai me to na sehta"
                                     />
                                 </VStack>
 

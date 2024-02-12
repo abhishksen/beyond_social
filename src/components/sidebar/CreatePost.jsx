@@ -111,20 +111,21 @@ function useCreatePost() {
     const { pathname } = useLocation();
 
 
-    const handleCreatePost = async (caption, selectedFile) => {
+    const handleCreatePost = async (selectedFile, caption) => {
         if (isLoading) return;
         if (!selectedFile) {
             // showToast("Error", "Please select an image", "error");
             throw new Error("Please select an image");
         }
         setIsLoading(true);
+
         const newPost = {
             caption: caption,
             likes: [],
             comments: [],
             createdAt: Date.now(),
             createdBy: authUser.uid,
-        };
+        }
 
         try {
             const postDocRef = await addDoc(collection(firestore, "posts"), newPost);
@@ -137,7 +138,7 @@ function useCreatePost() {
 
             await updateDoc(postDocRef, { imageURL: downloadURL });
 
-            newPost.imgURL = downloadURL;
+            newPost.imageURL = downloadURL;
 
             createPost({ ...newPost, id: postDocRef.id });
             addPost({ ...newPost, id: postDocRef.id })
