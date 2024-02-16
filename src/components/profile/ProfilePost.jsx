@@ -148,7 +148,7 @@ const ProfilePost = ({ post }) => {
                                         </Text>
                                     </Flex>
                                     {
-                                        authUser.uid === userProfile.uid && (
+                                        authUser?.uid === userProfile?.uid && (
                                             <Button
                                                 size={"sm"}
                                                 bg={"transparent"}
@@ -172,18 +172,17 @@ const ProfilePost = ({ post }) => {
                                     maxH={"340px"}
                                     overflowY={"auto"}
                                 >
-                                    <Comment
-                                        createdAt="3h ago"
-                                        username="agedjkfhg"
-                                        profilePic="/img2.jpg"
-                                        text="sala mera comment padh idhar"
-                                    />
+                                    {
+                                        post.comments.map(comment => (
+                                            <Comment key={comment.createdAt} comment={comment} />
+                                        ))
+                                    }
                                 </VStack>
 
                                 {/* <Divider my={4} bg={"gray.500"} /> */}
 
                                 {/* comment input box */}
-                                <PostFooter isProfilePage={true} />
+                                <PostFooter isProfilePage={true} post={post} />
 
                             </Flex>
                         </Flex>

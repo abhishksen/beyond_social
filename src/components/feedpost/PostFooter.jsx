@@ -1,10 +1,23 @@
 import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react"
 import { useState } from "react"
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constant";
+import usePostComment from "../../hooks/usePostComment";
+import useAuthStore from "../../store/authStore";
 
-const PostFooter = ({ username, isProfilePage }) => {
+const PostFooter = ({ post, username, isProfilePage }) => {
     const [liked, setLiked] = useState(false);
     const [likes, setLikes] = useState(1000);
+
+    const { isCommenting, handlePostComment } = usePostComment();
+    const [comment, setComment] = useState("");
+
+    const authUser = useAuthStore(state => state.user);
+
+    const handleSubmitComment = async () => {
+        if (comment.trim() === "") return;
+        await handlePostComment(post.id, comment);
+        setComment("");
+    }
 
     const handleLike = () => {
         if (liked) {
@@ -67,27 +80,36 @@ const PostFooter = ({ username, isProfilePage }) => {
                     View all 100 comments
                 </Text>
             </>)}
-            <Flex
-                alignItems={'center'}
-                justifyContent={'center'}
-                gap={4}
-                w={'full'}
-            >
-                <InputGroup>
-                    <Input variant={'flushed'} placeholder={'Add a comment...'} fontSize={14} />
-                    <InputRightElement>
-                        <Button
-                            variant={'unstyled'}
-                            fontSize={14}
-                            fontWeight={600}
-                            color={'blue.500'}
-                            _hover={{ color: 'white' }}
-                            bg={'transparent'}
-                            cursor={'pointer'}
-                        >Post</Button>
-                    </InputRightElement>
-                </InputGroup>
-            </Flex>
+
+            {authUser && (
+                <Flex
+                    alignItems={'center'}
+                    justifyContent={'center'}
+                    gap={4}
+                    w={'full'}
+                >
+                    <InputGroup>
+                        <Input variant={'flushed'} placeholder={'Add a comment...'} fontSize={14}
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                        />
+                        <InputRightElement>
+                            <Button
+                                variant={'unstyled'}
+                                fontSize={14}
+                                fontWeight={600}
+                                color={'blue.500'}
+                                _hover={{ color: 'white' }}
+                                bg={'transparent'}
+                                cursor={'pointer'}
+                                isLoading={isCommenting}
+                                onClick={handleSubmitComment}
+                            >Post</Button>
+                        </InputRightElement>
+                    </InputGroup>
+                </Flex>
+            )}
+
         </Box>
     )
 }
