@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constant";
 import usePostComment from "../../hooks/usePostComment";
 import useAuthStore from "../../store/authStore";
@@ -12,6 +12,8 @@ const PostFooter = ({ post, username, isProfilePage }) => {
     const [comment, setComment] = useState("");
 
     const authUser = useAuthStore(state => state.user);
+
+    const commentRef = useRef(null);
 
     const handleSubmitComment = async () => {
         if (comment.trim() === "") return;
@@ -50,6 +52,7 @@ const PostFooter = ({ post, username, isProfilePage }) => {
                 <Box
                     cursor={'pointer'}
                     fontSize={18}
+                    onClick={() => commentRef.current.focus()}
                 >
                     <CommentLogo />
                 </Box>
@@ -92,6 +95,7 @@ const PostFooter = ({ post, username, isProfilePage }) => {
                         <Input variant={'flushed'} placeholder={'Add a comment...'} fontSize={14}
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
+                            ref={commentRef}
                         />
                         <InputRightElement>
                             <Button

@@ -1,14 +1,14 @@
-import { Avatar, Flex, Text } from "@chakra-ui/react"
-import useGetUserProfileById from "../../hooks/useGetUserProfileById";
-import { Link } from "react-router-dom";
-import { timeAgo } from "../../utils/timeAgo";
+import { Avatar, Flex, Text } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
+import { timeAgo } from '../../utils/timeAgo'
+import useUserProfileStore from '../../store/userProfileStore'
 
-const Comment = ({ comment }) => {
-    const { userProfile, isLoading } = useGetUserProfileById(comment.createdBy);
-    if (isLoading) return <Text>Loading...</Text>
+const Caption = ({ post }) => {
+    const userProfile = useUserProfileStore((state) => state.userProfile);
     return (
         <Flex
             gap={4}
+            mb={4}
         >
             <Link to={`/${userProfile.userName}`}>
                 <Avatar src={userProfile.profilePicURL} size={"sm"} />
@@ -24,14 +24,14 @@ const Comment = ({ comment }) => {
                     <Link to={`/${userProfile.userName}`}>
                         <Text fontSize={14} fontWeight={"md"}>{userProfile.userName}</Text>
                     </Link>
-                    <Text fontSize={14} color={"gray.400"}>{comment.comment}</Text>
+                    <Text fontSize={14} color={"gray.400"}>{post.caption}</Text>
                 </Flex>
                 <Text fontSize={12} color={"gray"}>
-                    {timeAgo(comment.createdAt)}
+                    {timeAgo(post.createdAt)}
                 </Text>
             </Flex>
         </Flex >
     )
 }
 
-export default Comment
+export default Caption
