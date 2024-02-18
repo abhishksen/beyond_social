@@ -3,10 +3,9 @@ import { useRef, useState } from "react"
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constant";
 import usePostComment from "../../hooks/usePostComment";
 import useAuthStore from "../../store/authStore";
+import useLikePost from "../../hooks/useLikePost";
 
 const PostFooter = ({ post, username, isProfilePage }) => {
-    const [liked, setLiked] = useState(false);
-    const [likes, setLikes] = useState(1000);
 
     const { isCommenting, handlePostComment } = usePostComment();
     const [comment, setComment] = useState("");
@@ -15,21 +14,15 @@ const PostFooter = ({ post, username, isProfilePage }) => {
 
     const commentRef = useRef(null);
 
+    const { handleLikePost, isLiked, likes } = useLikePost(post);
+
     const handleSubmitComment = async () => {
         if (comment.trim() === "") return;
         await handlePostComment(post.id, comment);
         setComment("");
     }
 
-    const handleLike = () => {
-        if (liked) {
-            setLiked(false);
-            setLikes(likes - 1);
-        } else {
-            setLiked(true);
-            setLikes(likes + 1);
-        }
-    }
+
 
     return (
         <Box mb={10} mt={"auto"}>
@@ -41,12 +34,12 @@ const PostFooter = ({ post, username, isProfilePage }) => {
                 mb={2}
                 mt={4}
             >
-                <Box onClick={handleLike}
+                <Box onClick={handleLikePost}
                     cursor={'pointer'}
                     fontSize={18}
                 >
                     {
-                        liked ? (<NotificationsLogo />) : (<UnlikeLogo />)
+                        !isLiked ? (<NotificationsLogo />) : (<UnlikeLogo />)
                     }
                 </Box>
                 <Box
