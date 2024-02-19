@@ -1,13 +1,10 @@
-import { Box, Container, Flex, Skeleton, SkeletonCircle, VStack } from '@chakra-ui/react'
+import { Box, Container, Flex, Skeleton, SkeletonCircle, Text, VStack } from '@chakra-ui/react'
 import FeedPost from './FeedPost'
-import { useEffect, useState } from 'react';
+import useGetFeedPosts from '../../hooks/useGetFeedPosts';
+
 const FeedPosts = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000)
-    }, [])
+    const { isLoading, posts } = useGetFeedPosts();
+
     return (
         <Container maxW={'container.sm'} py={6} px={2}>
             {isLoading && [0, 1, 2, 3].map((_, idx) => (
@@ -24,29 +21,15 @@ const FeedPosts = () => {
                     </Skeleton>
                 </VStack>
             ))}
-            {!isLoading && (
-                <>
-                    <FeedPost
-                        img='/img1.jpg'
-                        username='sen_abhishk'
-                        avatar='/img1.jpg'
-                    />
-                    <FeedPost
-                        img='/img2.jpg'
-                        username='bangali_babu'
-                        avatar='/img2.jpg'
-                    />
-                    <FeedPost
-                        img='/img3.jpg'
-                        username='programmer_123'
-                        avatar='/img3.jpg'
-                    />
-                    <FeedPost
-                        img='/img4.jpg'
-                        username='kyu_bola'
-                        avatar='/img4.jpg'
-                    />
-                </>
+            {!isLoading && posts.length > 0 && posts.map(post => (
+                <FeedPost key={post.id} post={post} />
+            ))}
+            {!isLoading && posts.length === 0 && (
+                <VStack alignItems={'center'} justifyContent={'center'} h={'70vh'}>
+                    <Box fontSize={'2xl'} fontWeight={'medium'}>
+                        No Posts to show! Follow some users to see their posts.
+                    </Box>
+                </VStack>
             )}
         </Container>
     )
