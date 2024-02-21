@@ -3,7 +3,7 @@ import { CreatePostLogo } from "../../assets/constant"
 import { BsFillImageFill } from "react-icons/bs"
 import { useRef, useState } from "react";
 import usePreviewImage from "../../hooks/usePreviewImage";
-import useShowToast from "../../hooks/useShowtoast";
+import useShowToast from "../../hooks/useShowToast";
 import useAuthStore from "../../store/authStore";
 import usePostStore from "../../store/postStore";
 import useUserProfileStore from "../../store/userProfileStore";
@@ -108,6 +108,7 @@ function useCreatePost() {
     const authUser = useAuthStore((state) => state.user);
     const createPost = usePostStore((state) => state.createPost);
     const addPost = useUserProfileStore((state) => state.addPost);
+    const userProfile = useUserProfileStore((state) => state.userProfile);
     const { pathname } = useLocation();
 
 
@@ -140,8 +141,9 @@ function useCreatePost() {
 
             newPost.imageURL = downloadURL;
 
-            createPost({ ...newPost, id: postDocRef.id });
-            addPost({ ...newPost, id: postDocRef.id })
+            if (userProfile.uid === authUser.uid) createPost({ ...newPost, id: postDocRef.id });
+
+            if (pathname !== "/" && userProfile.uid === authUser.uid) addPost({ ...newPost, id: postDocRef.id });
 
             showToast("Success", "Post created successfully", "success");
 
